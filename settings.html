@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="uz" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport: Bootstrap responsive ishlashi uchun SHART -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: https://cdn.jsdelivr.net; style-src 'self' file: 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' file: https://cdn.jsdelivr.net; img-src 'self' file: data:; base-uri 'none'; form-action 'self'">
+  <title>Sozlamalar — TaskManager</title>
+  <style>html{visibility:hidden}</style>
+  <!-- Bootstrap 5.3 va Bootstrap Icons (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Faqat kichik qoʻshimcha uslublar -->
+  <link href="css/custom.css" rel="stylesheet">
+  <script src="js/auth.js"></script>
+</head>
+<body data-page="settings">
+
+  <!-- ===== YUQORI NAVBAR ===== -->
+  <nav class="navbar bg-body border-bottom sticky-top py-2">
+    <div class="container-fluid gap-2 flex-nowrap">
+      <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Menyuni ochish"><i class="bi bi-list"></i></button>
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold me-0 me-lg-4" href="dashboard.html"><span class="brand-mark"><i class="bi bi-check2-all"></i></span><span class="d-none d-sm-inline">TaskManager</span></a>
+
+      <form class="input-group d-none d-md-flex flex-grow-1 js-search-form" style="max-width:420px" role="search">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="search" class="form-control js-search" placeholder="Vazifalarni qidirish…" aria-label="Qidirish">
+      </form>
+
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <!-- Tugmali dropdown (Split button): asosiy tugma + ustuvorlik tanlash menyusi -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" data-action="new-task"><i class="bi bi-plus-lg"></i><span class="d-none d-sm-inline ms-1">Yangi vazifa</span></button>
+          <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"><span class="visually-hidden">Tezkor qoʻshish menyusi</span></button>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li><h6 class="dropdown-header">Ustuvorlik bilan qoʻshish</h6></li>
+            <li><button type="button" class="dropdown-item" data-action="new-task" data-priority="high"><i class="bi bi-chevron-double-up text-danger me-2"></i>Yuqori</button></li>
+            <li><button type="button" class="dropdown-item" data-action="new-task" data-priority="medium"><i class="bi bi-dash-lg text-warning me-2"></i>Oʻrta</button></li>
+            <li><button type="button" class="dropdown-item" data-action="new-task" data-priority="low"><i class="bi bi-chevron-double-down text-success me-2"></i>Past</button></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button type="button" class="dropdown-item" data-action="new-project"><i class="bi bi-folder-plus me-2"></i>Yangi loyiha</button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-outline-secondary js-theme" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Mavzuni almashtirish" aria-label="Mavzuni almashtirish"><i class="bi bi-moon-stars js-theme-icon"></i></button>
+        <!-- Foydalanuvchi dropdown menyusi -->
+        <div class="dropdown">
+          <button class="btn btn-light border d-flex align-items-center gap-2 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Foydalanuvchi menyusi">
+            <img src="assets/img/avatar.svg" alt="" width="28" height="28" class="rounded-circle">
+            <span class="d-none d-xl-inline small js-user-name"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li class="px-3 py-2"><div class="fw-semibold js-user-name"></div><div class="small text-body-secondary js-user-email"></div></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="settings.html"><i class="bi bi-person-gear me-2"></i>Profil sozlamalari</a></li>
+            <li><a class="dropdown-item" href="tasks.html"><i class="bi bi-list-check me-2"></i>Mening vazifalarim</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button type="button" class="dropdown-item text-danger js-logout"><i class="bi bi-box-arrow-right me-2"></i>Chiqish</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- ===== YON PANEL: lg+ ekranda doimiy, kichik ekranda Offcanvas ===== -->
+      <aside class="col-lg-3 col-xl-2 px-0 border-end sidebar-col">
+        <div class="offcanvas-lg offcanvas-start sidebar" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+          <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarLabel"><span class="brand-mark"><i class="bi bi-check2-all"></i></span> TaskManager</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Yopish"></button>
+          </div>
+          <div class="offcanvas-body flex-column p-3">
+            <!-- Telefonda qidiruv shu yerda -->
+            <form class="input-group mb-3 d-md-none js-search-form" role="search">
+              <span class="input-group-text"><i class="bi bi-search"></i></span>
+              <input type="search" class="form-control js-search" placeholder="Vazifalarni qidirish…" aria-label="Qidirish">
+            </form>
+            <ul class="nav nav-pills flex-column gap-1 mb-4">
+          <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i>Boshqaruv paneli</a></li>
+          <li class="nav-item"><a class="nav-link" href="tasks.html"><i class="bi bi-list-check"></i>Vazifalar <span class="badge rounded-pill text-bg-light border ms-auto" id="navTaskCount" data-bs-toggle="tooltip" data-bs-title="Bajarilmagan vazifalar">0</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="kanban.html"><i class="bi bi-kanban"></i>Kanban</a></li>
+          <li class="nav-item"><a class="nav-link" href="calendar.html"><i class="bi bi-calendar3"></i>Kalendar</a></li>
+          <li class="nav-item"><a class="nav-link" href="projects.html"><i class="bi bi-folder2-open"></i>Loyihalar</a></li>
+          <li class="nav-item"><a class="nav-link active" href="settings.html" aria-current="page"><i class="bi bi-gear"></i>Sozlamalar</a></li>
+            </ul>
+            <!-- Umumiy bajarilish (Progress komponenti) -->
+            <div class="card bg-body-tertiary border-0">
+              <div class="card-body p-3">
+                <div class="d-flex justify-content-between small mb-2"><span class="fw-semibold">Umumiy bajarilish</span><span id="sideProgressText">0%</span></div>
+                <div class="progress" style="height:8px" role="progressbar" aria-label="Umumiy bajarilish" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar" id="sideProgress" style="width:0%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== ASOSIY KONTENT ===== -->
+      <main class="col-lg-9 col-xl-10 py-4 px-3 px-md-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb small mb-2">
+            <li class="breadcrumb-item"><a href="dashboard.html"><i class="bi bi-house-door"></i> Bosh sahifa</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sozlamalar</li>
+          </ol>
+        </nav>
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-4">
+          <div><h1 class="h3 fw-bold mb-1">Sozlamalar</h1><p class="text-body-secondary mb-0">Profil, xavfsizlik va koʻrinish.</p></div>
+          
+        </div>
+        <div class="row g-4">
+          <!-- Chap menyu: Nav pills (kichik ekranda gorizontal, md+ da vertikal) -->
+          <div class="col-12 col-md-4 col-xl-3">
+            <div class="nav nav-pills flex-row flex-md-column gap-1" id="settingsTabs" role="tablist" aria-orientation="vertical">
+              <button class="nav-link text-start active" id="t-profile" data-bs-toggle="pill" data-bs-target="#pane-profile" type="button" role="tab" aria-controls="pane-profile" aria-selected="true"><i class="bi bi-person me-2"></i>Profil</button>
+              <button class="nav-link text-start" id="t-password" data-bs-toggle="pill" data-bs-target="#pane-password" type="button" role="tab" aria-controls="pane-password" aria-selected="false"><i class="bi bi-shield-lock me-2"></i>Parol</button>
+              <button class="nav-link text-start" id="t-view" data-bs-toggle="pill" data-bs-target="#pane-view" type="button" role="tab" aria-controls="pane-view" aria-selected="false"><i class="bi bi-palette me-2"></i>Koʻrinish</button>
+              <button class="nav-link text-start" id="t-account" data-bs-toggle="pill" data-bs-target="#pane-account" type="button" role="tab" aria-controls="pane-account" aria-selected="false"><i class="bi bi-person-x me-2"></i>Hisob</button>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-8 col-xl-6">
+            <div class="tab-content">
+
+              <!-- PROFIL -->
+              <div class="tab-pane fade show active" id="pane-profile" role="tabpanel" aria-labelledby="t-profile" tabindex="0">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <!-- Media: avatar rasmi (rounded-circle + img-thumbnail) -->
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                      <img src="assets/img/avatar.svg" alt="Profil rasmi" width="72" height="72" class="rounded-circle img-thumbnail">
+                      <div><div class="fw-semibold" id="profileName"></div><div class="small text-body-secondary" id="profileEmail"></div></div>
+                    </div>
+                    <form id="profileForm" novalidate class="vstack gap-3">
+                      <div class="alert alert-danger py-2" id="profileError" role="alert" hidden></div>
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="pName" name="name" placeholder="Ism" minlength="2" required>
+                        <label for="pName">Ism</label>
+                        <div class="invalid-feedback">Ismni kiriting (kamida 2 belgi).</div>
+                      </div>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <div class="form-floating">
+                          <input type="email" class="form-control" id="pEmail" name="email" placeholder="Email" required>
+                          <label for="pEmail">Email</label>
+                        </div>
+                        <div class="invalid-feedback">Email manzili notoʻgʻri.</div>
+                      </div>
+                      <div><button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Saqlash</button></div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PAROL -->
+              <div class="tab-pane fade" id="pane-password" role="tabpanel" aria-labelledby="t-password" tabindex="0">
+                <div class="card shadow-sm"><div class="card-body">
+                  <form id="passwordForm" novalidate class="vstack gap-3">
+                    <div class="alert alert-danger py-2" id="passwordError" role="alert" hidden></div>
+                    <div class="input-group has-validation">
+                      <div class="form-floating">
+                        <input type="password" class="form-control" id="pwCurrent" name="current" placeholder="Joriy parol" autocomplete="current-password" required>
+                        <label for="pwCurrent">Joriy parol</label>
+                      </div>
+                      <button class="btn btn-outline-secondary" type="button" data-toggle-password="#pwCurrent" aria-label="Parolni koʻrsatish"><i class="bi bi-eye"></i></button>
+                      <div class="invalid-feedback">Joriy parolni kiriting.</div>
+                    </div>
+                    <div>
+                      <div class="input-group has-validation">
+                        <div class="form-floating">
+                          <input type="password" class="form-control" id="pwNext" name="next" placeholder="Yangi parol" autocomplete="new-password" minlength="8" pattern="(?=.*[A-Za-z])(?=.*\d).{8,}" required>
+                          <label for="pwNext">Yangi parol</label>
+                        </div>
+                        <button class="btn btn-outline-secondary" type="button" data-toggle-password="#pwNext" aria-label="Parolni koʻrsatish"><i class="bi bi-eye"></i></button>
+                        <div class="invalid-feedback">Kamida 8 belgi, harf va raqam boʻlsin.</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2 mt-2">
+                        <div class="progress flex-grow-1" style="height:6px" role="progressbar" aria-label="Parol kuchi"><div class="progress-bar" id="pwMeter" style="width:0"></div></div>
+                        <small class="text-body-secondary" id="pwMeterText" style="min-width:5rem"></small>
+                      </div>
+                      <div class="form-text">Kamida 8 belgi, harf va raqamdan iborat.</div>
+                    </div>
+                    <div><button type="submit" class="btn btn-primary"><i class="bi bi-key me-1"></i>Parolni yangilash</button></div>
+                  </form>
+                </div></div>
+              </div>
+
+              <!-- KOʻRINISH -->
+              <div class="tab-pane fade" id="pane-view" role="tabpanel" aria-labelledby="t-view" tabindex="0">
+                <div class="card shadow-sm"><div class="card-body vstack gap-4">
+                  <div class="form-check form-switch fs-6">
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkSwitch">
+                    <label class="form-check-label" for="darkSwitch">Qorongʻi rejim</label>
+                  </div>
+                  <div>
+                    <label for="perPage" class="form-label">Jadvaldagi qatorlar soni: <strong id="perPageOut">8</strong></label>
+                    <input type="range" class="form-range" id="perPage" min="4" max="20" step="2" value="8">
+                  </div>
+                  <fieldset>
+                    <legend class="form-label fs-6">Vazifalarning standart koʻrinishi</legend>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="defaultView" id="dvTable" value="table"><label class="form-check-label" for="dvTable">Jadval</label></div>
+                    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="defaultView" id="dvList" value="list"><label class="form-check-label" for="dvList">Roʻyxat</label></div>
+                  </fieldset>
+                </div></div>
+              </div>
+
+              <!-- HISOB -->
+              <div class="tab-pane fade" id="pane-account" role="tabpanel" aria-labelledby="t-account" tabindex="0">
+                <div class="card border-danger-subtle shadow-sm">
+                  <div class="card-header bg-danger-subtle text-danger-emphasis fw-semibold"><i class="bi bi-exclamation-octagon me-2"></i>Hisob amallari</div>
+                  <div class="card-body vstack gap-3">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                      <div><div class="fw-semibold">Namunaviy ma'lumotlarni tiklash</div><div class="small text-body-secondary">Barcha vazifa va loyihalar boshlangʻich holatga qaytadi.</div></div>
+                      <button type="button" class="btn btn-outline-warning" data-action="reset-data"><i class="bi bi-arrow-counterclockwise me-1"></i>Tiklash</button>
+                    </div>
+                    <hr class="my-0">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                      <div><div class="fw-semibold">Tizimdan chiqish</div><div class="small text-body-secondary">Sessiya yakunlanadi.</div></div>
+                      <button type="button" class="btn btn-outline-danger js-logout"><i class="bi bi-box-arrow-right me-1"></i>Chiqish</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ===== OYNALAR (Modal) ===== -->
+  <!-- Vazifa qoʻshish / tahrirlash formasi -->
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
+      <form class="modal-content" id="taskForm" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="taskModalLabel">Yangi vazifa</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id">
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="tfTitle" name="title" placeholder="Sarlavha" maxlength="200" required>
+                <label for="tfTitle">Sarlavha</label>
+                <div class="invalid-feedback">Vazifa sarlavhasini kiriting.</div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating">
+                <textarea class="form-control" id="tfDesc" name="description" placeholder="Tavsif" maxlength="2000" style="height:100px"></textarea>
+                <label for="tfDesc">Tavsif (ixtiyoriy)</label>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating">
+                <select class="form-select" id="tfStatus" name="status">
+                  <option value="todo">Qilish kerak</option><option value="in_progress">Jarayonda</option>
+                  <option value="review">Tekshiruvda</option><option value="done">Bajarildi</option>
+                </select>
+                <label for="tfStatus">Holat</label>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating">
+                <select class="form-select" id="tfPriority" name="priority">
+                  <option value="high">Yuqori</option><option value="medium">Oʻrta</option><option value="low">Past</option>
+                </select>
+                <label for="tfPriority">Ustuvorlik</label>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="tfDue" name="dueDate" placeholder="Muddat">
+                <label for="tfDue">Muddat</label>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating">
+                <select class="form-select" id="tfProject" name="projectId"></select>
+                <label for="tfProject">Loyiha</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Yangi loyiha formasi -->
+  <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" id="projectForm" novalidate>
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="projectModalLabel">Yangi loyiha</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+        </div>
+        <div class="modal-body vstack gap-3">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="pfName" name="name" placeholder="Nomi" maxlength="80" required>
+            <label for="pfName">Loyiha nomi</label>
+            <div class="invalid-feedback">Loyiha nomini kiriting.</div>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="pfDesc" name="description" placeholder="Tavsif" maxlength="200">
+            <label for="pfDesc">Qisqacha tavsif</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">Yaratish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tasdiqlash oynasi -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center p-4">
+          <i class="bi bi-exclamation-triangle text-warning display-5"></i>
+          <h2 class="h6 mt-2" id="confirmLabel">Tasdiqlang</h2>
+          <p class="small text-body-secondary mb-3 js-confirm-text"></p>
+          <div class="d-flex gap-2 justify-content-center">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Bekor qilish</button>
+            <button type="button" class="btn btn-danger btn-sm js-confirm-ok">Ha</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

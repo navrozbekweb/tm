@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="uz" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport: Bootstrap responsive ishlashi uchun SHART -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: https://cdn.jsdelivr.net; style-src 'self' file: 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' file: https://cdn.jsdelivr.net; img-src 'self' file: data:; base-uri 'none'; form-action 'self'">
+  <title>Vazifalar boshqaruvi — TaskManager</title>
+  <style>html{visibility:hidden}</style>
+  <!-- Bootstrap 5.3 va Bootstrap Icons (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Faqat kichik qoʻshimcha uslublar -->
+  <link href="css/custom.css" rel="stylesheet">
+  <script src="js/auth.js"></script>
+</head>
+<body class="auth-bg">
+
+  <!-- ===== NAVBAR (konteyner ichida, kichik ekranda yigʻiladi) ===== -->
+  <nav class="navbar navbar-expand-md bg-body border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" href="index.html"><span class="brand-mark"><i class="bi bi-check2-all"></i></span> TaskManager</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Menyuni ochish"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item"><a class="nav-link" href="#features">Imkoniyatlar</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Galereya</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">Savollar</a></li>
+        </ul>
+        <div class="d-flex flex-column flex-md-row gap-2">
+          <button type="button" class="btn btn-outline-secondary js-theme" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Mavzuni almashtirish" aria-label="Mavzuni almashtirish"><i class="bi bi-moon-stars js-theme-icon"></i></button>
+          <a class="btn btn-outline-primary" href="login.html"><i class="bi bi-box-arrow-in-right me-1"></i>Kirish</a>
+          <a class="btn btn-primary" href="register.html">Bepul boshlash</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="container hero-section">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 text-center text-lg-start">
+        <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis mb-3 px-3 py-2"><i class="bi bi-stars me-1"></i>Yangi: Kanban va Kalendar</span>
+        <h1 class="display-4 fw-bold mb-3">Vazifalaringizni <span class="text-primary">tartibga soling</span></h1>
+        <p class="lead text-body-secondary mb-4">Oddiy, tez va qulay vazifa boshqaruvi: <mark>roʻyxat</mark>, <mark>kanban</mark> va <mark>kalendar</mark> bir joyda.</p>
+        <div class="d-grid d-sm-flex gap-2 justify-content-center justify-content-lg-start">
+          <a class="btn btn-primary btn-lg px-4" href="register.html" data-bs-toggle="tooltip" data-bs-title="Karta talab qilinmaydi">Bepul boshlash</a>
+          <a class="btn btn-outline-secondary btn-lg px-4" href="login.html">Kirish</a>
+        </div>
+        <p class="small text-body-secondary mt-3 mb-0"><i class="bi bi-check2-circle text-success me-1"></i>Roʻyxatdan oʻtish 30 soniya oladi</p>
+      </div>
+      <div class="col-lg-6">
+        <!-- Media: moslashuvchan rasm (img-fluid), burchaklari yumaloq, soya bilan -->
+        <img src="assets/img/hero.svg" class="img-fluid rounded-4 shadow-lg" alt="TaskManager interfeysi">
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== IMKONIYATLAR ===== -->
+  <section class="py-5 bg-body-tertiary" id="features">
+    <div class="container">
+      <div class="text-center mb-5">
+        <p class="text-uppercase fw-semibold small text-primary mb-1">Imkoniyatlar</p>
+        <h2 class="fw-bold">Samarali ishlash uchun hamma narsa</h2>
+        <p class="text-body-secondary">Bitta ilovada uch xil koʻrinish va qulay boshqaruv.</p>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+              <span class="feature-icon mb-3"><i class="bi bi-list-check"></i></span>
+              <h3 class="h5">Vazifalar jadvali</h3>
+              <p class="text-body-secondary mb-0">Filtr, saralash va qidiruv bilan jadval hamda roʻyxat koʻrinishi.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button type="button" class="btn btn-sm btn-link p-0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Vazifalar jadvali" data-bs-content="Holat, ustuvorlik va loyiha boʻyicha filtrlang, muddat boʻyicha saralang.">Batafsil <i class="bi bi-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+              <span class="feature-icon mb-3"><i class="bi bi-kanban"></i></span>
+              <h3 class="h5">Kanban doska</h3>
+              <p class="text-body-secondary mb-0">Kartalarni sudrab holatini bir zumda oʻzgartiring.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button type="button" class="btn btn-sm btn-link p-0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Kanban doska" data-bs-content="Qilish kerak → Jarayonda → Tekshiruvda → Bajarildi ustunlari.">Batafsil <i class="bi bi-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+              <span class="feature-icon mb-3"><i class="bi bi-calendar3"></i></span>
+              <h3 class="h5">Kalendar</h3>
+              <p class="text-body-secondary mb-0">Barcha muddatlar oylik kalendarda bir qarashda koʻrinadi.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button type="button" class="btn btn-sm btn-link p-0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Kalendar" data-bs-content="Muddati oʻtgan vazifalar qizil rangda ajratiladi.">Batafsil <i class="bi bi-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+              <span class="feature-icon mb-3"><i class="bi bi-folder2-open"></i></span>
+              <h3 class="h5">Loyihalar</h3>
+              <p class="text-body-secondary mb-0">Vazifalarni loyihalarga guruhlang va jarayonni kuzating.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button type="button" class="btn btn-sm btn-link p-0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Loyihalar" data-bs-content="Har bir loyihada bajarilish foizi koʻrsatiladi.">Batafsil <i class="bi bi-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+              <span class="feature-icon mb-3"><i class="bi bi-moon-stars"></i></span>
+              <h3 class="h5">Qorongʻi rejim</h3>
+              <p class="text-body-secondary mb-0">Koʻzni charchatmaydigan qorongʻi mavzu.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button type="button" class="btn btn-sm btn-link p-0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Qorongʻi rejim" data-bs-content="Bir tugma bilan almashtiring — tanlovingiz saqlanadi.">Batafsil <i class="bi bi-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+              <span class="feature-icon mb-3"><i class="bi bi-phone"></i></span>
+              <h3 class="h5">Har qanday ekranda</h3>
+              <p class="text-body-secondary mb-0">Telefon, planshet va kompyuterga moslashuvchan dizayn.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button type="button" class="btn btn-sm btn-link p-0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top" data-bs-title="Har qanday ekranda" data-bs-content="Bootstrap grid tizimi: xs, sm, md, lg, xl, xxl breakpointlar.">Batafsil <i class="bi bi-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALEREYA: SLAYDER (Carousel) ===== -->
+  <section class="py-5" id="gallery">
+    <div class="container">
+      <div class="text-center mb-4">
+        <p class="text-uppercase fw-semibold small text-primary mb-1">Galereya</p>
+        <h2 class="fw-bold">Ilova koʻrinishlari</h2>
+      </div>
+      <div id="landingCarousel" class="carousel slide shadow rounded-4 overflow-hidden" data-bs-ride="carousel" aria-label="Ilova koʻrinishlari">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="1-slayd"></button>
+          <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="1" aria-label="2-slayd"></button>
+          <button type="button" data-bs-target="#landingCarousel" data-bs-slide-to="2" aria-label="3-slayd"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="assets/img/slide-1.svg" class="d-block w-100 carousel-img-lg" alt="Vazifalar roʻyxati">
+            <div class="carousel-caption text-start">
+              <h3 class="fw-bold">Vazifalar roʻyxati</h3>
+              <p class="d-none d-md-block">Barcha vazifalar tartibli jadvalda — filtr va qidiruv bilan.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="assets/img/slide-2.svg" class="d-block w-100 carousel-img-lg" alt="Kanban doska">
+            <div class="carousel-caption text-start">
+              <h3 class="fw-bold">Kanban doska</h3>
+              <p class="d-none d-md-block">Kartalarni sudrab tashlang va jarayonni boshqaring.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="assets/img/slide-3.svg" class="d-block w-100 carousel-img-lg" alt="Kalendar">
+            <div class="carousel-caption text-start">
+              <h3 class="fw-bold">Kalendar</h3>
+              <p class="d-none d-md-block">Muddatlarni oylik kalendarda kuzating.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#landingCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Oldingi</span></button>
+        <button class="carousel-control-next" type="button" data-bs-target="#landingCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Keyingi</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FIKR (matn dizayni: figure + blockquote) ===== -->
+  <section class="py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <figure class="text-center mb-0">
+            <blockquote class="blockquote fs-4">
+              <p>“Jamoamiz vazifalarini endi bir joyda yuritamiz — muddatlar hech qachon esdan chiqmaydi.”</p>
+            </blockquote>
+            <figcaption class="blockquote-footer mb-0">Loyiha rahbari, <cite title="Manba">IT jamoa</cite></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SAVOLLAR: ACCORDION ===== -->
+  <section class="py-5" id="faq-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold text-center mb-4">Koʻp beriladigan savollar</h2>
+          <div class="accordion" id="faq">
+        <div class="accordion-item">
+          <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">Dastur pullikmi?</button></h3>
+          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faq"><div class="accordion-body">Yoʻq, TaskManager bepul. Barcha imkoniyatlardan cheklovsiz foydalanishingiz mumkin.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">Ma'lumotlarim qayerda saqlanadi?</button></h3>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Ma'lumotlar faqat sizning brauzeringizda (localStorage) saqlanadi va hech qayerga yuborilmaydi.</div></div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">Telefonda ishlaydimi?</button></h3>
+          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Ha. Dizayn Bootstrap grid yordamida barcha ekran oʻlchamlariga moslashadi.</div></div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-top py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <small class="text-body-secondary">&copy; 2026 TaskManager. Barcha huquqlar himoyalangan.</small>
+      <ul class="list-inline mb-0 small">
+        <li class="list-inline-item"><a href="login.html">Kirish</a></li>
+        <li class="list-inline-item"><a href="register.html">Roʻyxatdan oʻtish</a></li>
+        <li class="list-inline-item"><a href="#features">Imkoniyatlar</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>
